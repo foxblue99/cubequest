@@ -41,10 +41,13 @@ FROM node:22-slim AS production
 # 安装系统依赖（Prisma 需要 OpenSSL）
 RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
+# 占位数据库 URL（仅用于 build 阶段，prisma generate 需要 schema 能解析）
+ENV DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
+
 # ---------- API 文件 ----------
 WORKDIR /api
 
-# 先拷贝 prisma schema（npm ci 的 postinstall 会触发 prisma generate）
+# 先拷贝 prisma schema（npm install 的 postinstall 会触发 prisma generate）
 COPY cubequest-api/package.json cubequest-api/package-lock.json* ./
 COPY cubequest-api/prisma ./prisma
 RUN npm install --omit=dev --legacy-peer-deps
