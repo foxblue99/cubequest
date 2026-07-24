@@ -20,7 +20,8 @@ COPY cubequest-api/package.json cubequest-api/package-lock.json* ./
 COPY cubequest-api/ ./
 
 # 强制删除可能带入的本地依赖，并安装 Linux 版依赖
-RUN rm -rf node_modules && npm install --legacy-peer-deps
+RUN rm -rf node_modules && npm ci --legacy-peer-deps
+RUN ls -la node_modules/.bin/ | head -20
 
 RUN npm run build
 
@@ -34,7 +35,8 @@ FROM node:22-slim AS web-builder
 WORKDIR /app
 COPY cubequest-web/package.json cubequest-web/package-lock.json* ./
 COPY cubequest-web/ ./
-RUN rm -rf node_modules && npm install --legacy-peer-deps
+RUN rm -rf node_modules && npm ci --legacy-peer-deps
+RUN ls -la node_modules/.bin/ | head -20
 RUN npm run build
 
 # ============ Stage 3: 生产镜像（包含两个服务） ============
