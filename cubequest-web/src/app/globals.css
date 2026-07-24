@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #020617;
+  --color-foreground: #f1f5f9;
+  --color-primary: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  --color-secondary: #8b5cf6;
+  --color-accent-gold: #f59e0b;
+  --color-accent-green: #22c55e;
+  --color-accent-orange: #f97316;
+  --color-accent-red: #ef4444;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-pink: #ec4899;
+  --color-surface: #0f172a;
+  --color-surface-card: rgba(15,23,42,0.7);
+  --color-border: #1e293b;
+  --color-muted: #64748b;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body { background: var(--color-background); color: var(--color-foreground); font-family: var(--font-sans),system-ui,sans-serif; overflow-x: hidden; }
+
+/* ── Scrollbar hide ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+
+/* ── Gradient texts ── */
+.gradient-blue  { background: linear-gradient(135deg,#38bdf8,#818cf8,#c084fc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.gradient-fire  { background: linear-gradient(135deg,#f97316,#ef4444,#fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.gradient-gold  { background: linear-gradient(135deg,#fbbf24,#f59e0b,#d97706,#fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.gradient-cyber { background: linear-gradient(135deg,#06b6d4,#3b82f6,#8b5cf6,#ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+/* ── Buttons ── */
+.btn-primary {
+  display:inline-flex; align-items:center; gap:.5rem; padding:.875rem 2.25rem;
+  border-radius:1rem; font-weight:700; font-size:1rem; color:#fff;
+  background: linear-gradient(135deg,#3b82f6,#6366f1,#8b5cf6);
+  background-size:200% 200%; animation:gradient-shift 3s ease infinite;
+  box-shadow:0 0 40px rgba(99,102,241,.4),0 0 80px rgba(59,130,246,.2);
+  transition:all .3s cubic-bezier(.4,0,.2,1); position:relative; overflow:hidden;
+}
+.btn-primary::after {
+  content:""; position:absolute; inset:0; background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.2) 50%,transparent 70%);
+  background-size:200% 200%; animation:shimmer 2.5s infinite;
+}
+.btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 0 60px rgba(99,102,241,.6),0 0 120px rgba(59,130,246,.35); }
+
+.btn-outline {
+  display:inline-flex; align-items:center; gap:.5rem; padding:.875rem 2.25rem;
+  border-radius:1rem; font-weight:700; font-size:1rem; color:var(--color-foreground);
+  border:1.5px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03);
+  backdrop-filter:blur(12px); transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.btn-outline:hover { border-color:rgba(99,102,241,.5); background:rgba(99,102,241,.08); transform:translateY(-3px); box-shadow:0 0 30px rgba(99,102,241,.2); }
+
+.btn-gold {
+  display:inline-flex; align-items:center; gap:.5rem; padding:1rem 2.75rem;
+  border-radius:1rem; font-weight:800; font-size:1.05rem; color:#0f172a;
+  background:linear-gradient(135deg,#fbbf24,#f59e0b,#d97706,#fbbf24); background-size:300% 300%;
+  animation:gradient-shift 2s ease infinite;
+  box-shadow:0 0 50px rgba(245,158,11,.45),0 0 100px rgba(245,158,11,.2);
+  transition:all .3s cubic-bezier(.4,0,.2,1); position:relative; overflow:hidden;
+}
+.btn-gold::after {
+  content:""; position:absolute; inset:0; background:linear-gradient(135deg,transparent 20%,rgba(255,255,255,.3) 50%,transparent 80%);
+  background-size:200% 200%; animation:shimmer 2s infinite;
+}
+.btn-gold:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 0 80px rgba(245,158,11,.6),0 0 150px rgba(245,158,11,.3); }
+
+/* ── Hero glow orbs ── */
+.hero-orb { position:absolute; border-radius:50%; filter:blur(100px); pointer-events:none; will-change:transform,opacity; }
+.orb-1 { width:800px; height:800px; background:radial-gradient(circle,#3b82f6,transparent); top:-30%; left:-20%; animation:orb-float 8s ease-in-out infinite; }
+.orb-2 { width:600px; height:600px; background:radial-gradient(circle,#8b5cf6,transparent); top:20%; right:-15%; animation:orb-float 10s ease-in-out 2s infinite; }
+.orb-3 { width:500px; height:500px; background:radial-gradient(circle,#06b6d4,transparent); bottom:10%; left:30%; animation:orb-float 7s ease-in-out 4s infinite; }
+.orb-4 { width:350px; height:350px; background:radial-gradient(circle,#ec4899,transparent); top:60%; right:10%; animation:orb-float 9s ease-in-out 1s infinite; }
+.orb-5 { width:400px; height:400px; background:radial-gradient(circle,#f97316,transparent); bottom:40%; left:50%; animation:orb-float 11s ease-in-out 3s infinite; }
+
+/* ── Card ── */
+.card-glass {
+  background:rgba(15,23,42,.55); backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.06); border-radius:1.25rem;
+  padding:2rem; transition:all .4s cubic-bezier(.4,0,.2,1);
+  position:relative; overflow:hidden;
+}
+.card-glass::before {
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(99,102,241,.08),transparent 60%);
+  opacity:0; transition:opacity .4s;
+}
+.card-glass:hover { transform:translateY(-8px); border-color:rgba(99,102,241,.25); box-shadow:0 30px 60px rgba(0,0,0,.4); }
+.card-glass:hover::before { opacity:1; }
+
+/* ── Section badges ── */
+.badge { display:inline-flex; align-items:center; gap:.5rem; padding:.4rem 1rem; border-radius:9999px; font-size:.8rem; font-weight:600; }
+.badge-blue { border:1px solid rgba(59,130,246,.3); background:rgba(59,130,246,.1); color:#60a5fa; }
+.badge-gold { border:1px solid rgba(245,158,11,.3); background:rgba(245,158,11,.1); color:#fbbf24; }
+.badge-pulse { animation:pulse-badge 2s ease-in-out infinite; }
+
+/* ── Animations ── */
+@keyframes gradient-shift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+@keyframes orb-float { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-40px) scale(1.1)} 66%{transform:translate(-20px,30px) scale(.9)} }
+@keyframes pulse-badge { 0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.3)} 50%{box-shadow:0 0 0 8px rgba(59,130,246,0)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+@keyframes spin-slow { to{transform:rotate(360deg)} }
+@keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
+@keyframes glitch-1 { 0%,100%{transform:translate(0)} 20%{transform:translate(-3px,2px)} 40%{transform:translate(3px,-1px)} 60%{transform:translate(-1px,-2px)} 80%{transform:translate(2px,1px)} }
+@keyframes reveal { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+@keyframes count-in { from{opacity:0;filter:blur(4px);transform:translateY(12px) scale(.95)} to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)} }
+
+.animate-float { animation:float 5s ease-in-out infinite; }
+.animate-float-delay { animation:float 5s ease-in-out 1.5s infinite; }
+.animate-float-slow { animation:float 7s ease-in-out infinite; }
+.animate-reveal { animation:reveal .8s cubic-bezier(.4,0,.2,1) forwards; }
+.animate-count-in { animation:count-in .6s cubic-bezier(.4,0,.2,1) forwards; }
+
+/* ── Speed lines ── */
+.speedline {
+  position:absolute; height:1px; background:linear-gradient(90deg,transparent,rgba(56,189,248,.6),transparent);
+  animation:speedline-scroll 4s linear infinite; opacity:.15;
+}
+@keyframes speedline-scroll { 0%{transform:translateX(-100%)} 100%{transform:translateX(100vw)} }
+
+/* ── Parallax stars ── */
+.stars { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.star {
+  position:absolute; width:2px; height:2px; background:#fff; border-radius:50%;
+  animation:twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:.2} 50%{opacity:.8} }
+
+/* Daily Heroes leaderboard */
+@keyframes edgeFlow { 0%,100%{opacity:.3} 50%{opacity:1} }
+@keyframes heroFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes tickerScroll { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
+@keyframes tickerMarquee { 0%{transform:translateX(0)} 100%{transform:translateX(-33.333%)} }
+
+/* Timer digits */
+.timer-digit { font-family:var(--font-mono); font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }

@@ -1,0 +1,14 @@
+node_modules
+dist
+.next
+.git
+.env
+.env.*
+*.log
+dev.db
+dev.db-journal
+uploads/*
+!uploads/.gitkeep
+.DS_Store
+Thumbs.db
+cubequest-fresh
