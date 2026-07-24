@@ -13,13 +13,15 @@ RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists
 # 占位数据库 URL（仅用于 build 阶段，prisma generate 需要 schema 能解析）
 ENV DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
 
-# 先拷贝 prisma schema（npm ci 的 postinstall 会触发 prisma generate）
+# 先拷贝 package 文件，便于 Docker 缓存依赖层
 COPY cubequest-api/package.json cubequest-api/package-lock.json* ./
-COPY cubequest-api/prisma ./prisma
-RUN npm install --legacy-peer-deps
 
-# 拷贝剩余源码并构建
+# 拷贝完整源码（可能带入本机 Windows 版 node_modules，下一步会强制重装）
 COPY cubequest-api/ ./
+
+# 强制删除可能带入的本地依赖，并安装 Linux 版依赖
+RUN rm -rf node_modules && npm install --legacy-peer-deps
+
 RUN npm run build
 
 # 编译 seed 脚本为 JS（生产环境不装 ts-node）
@@ -31,8 +33,8 @@ RUN npx tsc prisma/seed-records.ts --outDir dist/seed --esModuleInterop --module
 FROM node:22-slim AS web-builder
 WORKDIR /app
 COPY cubequest-web/package.json cubequest-web/package-lock.json* ./
-RUN npm install --legacy-peer-deps
 COPY cubequest-web/ ./
+RUN rm -rf node_modules && npm install --legacy-peer-deps
 RUN npm run build
 
 # ============ Stage 3: 生产镜像（包含两个服务） ============
