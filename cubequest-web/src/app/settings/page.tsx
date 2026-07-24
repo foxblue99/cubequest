@@ -74,11 +74,6 @@ export default function SettingsPage() {
         localStorage.setItem('cq_user', JSON.stringify(auth.user));
       }
 
-      // Update AI coach profile bio separately
-      if (bio !== undefined) {
-        await fetch('/api/ai/profile/update', { method: 'POST', headers: h, body: JSON.stringify({ bio }) });
-      }
-
       setSuccess('设置已保存 ✅');
     } catch (err: unknown) {
       const message =
